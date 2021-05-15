@@ -3,12 +3,14 @@ import { SliderConfigItemType } from '../../store/config/types';
 
 const SliderPixi = ({ config }: { config: SliderConfigItemType }) => {
   const { minVal, maxVal, step, title, animatable, format, current } = config;
-  const [val, setVal] = useState(current);
+  const [val, setVal] = useState<number>(current);
 
   const onChangeInternal = (event: ChangeEvent<HTMLInputElement>) => {
     const newVal = parseFloat(event.target.value);
     setVal(newVal);
-    if (config.onChange) config.onChange(newVal);
+    if (config.onChange) {
+      config.onChange(newVal);
+    }
   };
 
   return (

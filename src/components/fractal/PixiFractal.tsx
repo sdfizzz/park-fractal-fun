@@ -1,30 +1,28 @@
 import React from 'react';
 import { Graphics } from '@inlet/react-pixi';
-import { Observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../store/StoreContext';
 
-import StoreContext from '../../store/StoreContext';
+const PixiFractal = observer(() => {
+  const store = useStore();
 
-const PixiFractal = () => {
-  const store = React.createContext(StoreContext);
+  // eslint-disable-next-line no-console
+  console.log('store', store);
 
   return (
-    <Observer>
-      {() => (
-        <Graphics
-          draw={(g) => {
-            g.beginFill(0xff3300);
-            g.lineStyle(4, 0xffd900, 1);
+    <Graphics
+      draw={(g) => {
+        g.beginFill(0xff3300);
+        g.lineStyle(4, 0xffd900, 1);
 
-            g.moveTo(50, 50);
-            g.lineTo(250, 50);
-            g.lineTo(100, 100);
-            g.lineTo(50, 50);
-            g.endFill();
-          }}
-        />
-      )}
-    </Observer>
+        g.moveTo(50, 50);
+        g.lineTo(250, 50);
+        g.lineTo(100, 100);
+        g.lineTo(50, 50);
+        g.endFill();
+      }}
+    />
   );
-};
+});
 
 export default PixiFractal;

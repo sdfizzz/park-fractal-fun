@@ -3,6 +3,7 @@ type ItemType = {
   type: string;
   title: string;
   animatable?: boolean;
+  current: string | number;
 };
 
 type ConfigItemType<T> = ItemType & {

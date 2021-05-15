@@ -1,8 +1,10 @@
 import React from 'react';
 import { Stage } from '@inlet/react-pixi';
+import { observer } from 'mobx-react-lite';
+
 import PixiFractal from './PixiFractal';
 
-const FractalCanvas = ({ width, height }: { width: number; height: number }) => (
+const FractalCanvas = observer(({ width, height }: { width: number; height: number }) => (
   <Stage
     width={width}
     height={height}
@@ -10,6 +12,6 @@ const FractalCanvas = ({ width, height }: { width: number; height: number }) => 
   >
     <PixiFractal />
   </Stage>
-);
+));
 
 export default FractalCanvas;

@@ -1,17 +1,17 @@
 import React from 'react';
-import { useLocalObservable } from 'mobx-react';
-import defaultStore from './defaultConfig';
+import { useLocalStore } from 'mobx-react-lite';
+import ObservableStore from './ObservableStore';
 import { StoreType } from './config/types';
 
-const StoreContext = React.createContext<StoreType>(defaultStore);
+const StoreContext = React.createContext<StoreType>(new ObservableStore());
 
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
-  const store = useLocalObservable<StoreType>(() => ({
-    ...defaultStore,
-  }));
+  const store = useLocalStore<StoreType>(() => new ObservableStore());
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 };
 
-export { StoreProvider };
+const useStore = () => React.useContext(StoreContext);
+
+export { useStore, StoreProvider };
 export default StoreContext;
