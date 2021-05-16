@@ -3,11 +3,16 @@ import { useLocalStore } from 'mobx-react-lite';
 import ObservableStore from './ObservableStore';
 import { StoreType } from './config/types';
 
-const StoreContext = React.createContext<StoreType>(new ObservableStore());
+const StoreContext = React.createContext<StoreType>(new ObservableStore(0, 0));
 
-const StoreProvider = ({ children }: { children: React.ReactNode }) => {
-  const store = useLocalStore<StoreType>(() => new ObservableStore());
-
+const StoreProvider = ({
+  canvasSize,
+  children,
+}: {
+  canvasSize: { w: number; h: number };
+  children: React.ReactNode;
+}) => {
+  const store = useLocalStore<StoreType>(() => new ObservableStore(canvasSize.w, canvasSize.h));
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 };
 

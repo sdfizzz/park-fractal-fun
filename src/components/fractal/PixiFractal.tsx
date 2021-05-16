@@ -1,14 +1,7 @@
 import React from 'react';
 import { Graphics } from '@inlet/react-pixi';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../store/StoreContext';
 
-const PixiFractal = observer(() => {
-  const store = useStore();
-
-  // eslint-disable-next-line no-console
-  console.log('store', store);
-
+const PixiFractal = () => {
   return (
     <Graphics
       draw={(g) => {
@@ -23,6 +16,6 @@ const PixiFractal = observer(() => {
       }}
     />
   );
-});
+};
 
 export default PixiFractal;

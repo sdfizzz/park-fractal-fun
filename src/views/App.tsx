@@ -34,12 +34,12 @@ const Layout = styled.main`
 
 function App() {
   return (
-    <StoreProvider>
+    <StoreProvider canvasSize={{ w: 800, h: 800 }}>
       <Layout>
         <Header area="header" />
         <SideMenu area="menu" />
         <ContentContainer>
-          <FractalCanvas width={800} height={500} />
+          <FractalCanvas />
           <ConfigPrinter />
         </ContentContainer>
         <Footer area="footer" />

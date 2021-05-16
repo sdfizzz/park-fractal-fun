@@ -31,8 +31,26 @@ type InputConfigItemType = ConfigItemType<string> & {
 };
 
 type StoreType = {
-  config: Array<ItemType>;
+  screen: { width: number; height: number };
+  branch: { defaultLen: number; width: number };
+  stroke: SliderConfigItemType;
+  angle: SliderConfigItemType;
+  branchCount: SliderConfigItemType;
+  branchLenCoef: SliderConfigItemType;
+  deep: SliderConfigItemType;
+  text: InputConfigItemType;
+  readonly sliders: Array<SliderConfigItemType>;
+  readonly texts: Array<InputConfigItemType>;
+  readonly config: ConfigProps;
 };
+
+interface ConfigProps {
+  stroke: number;
+  angle: number;
+  branchCount: number;
+  branchLenCoef: number;
+  deep: number;
+}
 
 export type {
   ItemType,
@@ -41,4 +59,5 @@ export type {
   DropdownConfigItemType,
   InputConfigItemType,
   StoreType,
+  ConfigProps,
 };

@@ -14,13 +14,16 @@ const ConfigPrinter = observer(() => {
 
   return (
     <Container>
-      {store.config
-        ? store.config.map((v) => (
-            <div key={v.id}>
-              {v.id}: {v.current}
-            </div>
-          ))
-        : 'empty'}
+      {store.sliders.map((v) => (
+        <div key={v.id}>
+          {v.id}: {v.current}
+        </div>
+      ))}
+      {store.texts.map((v) => (
+        <div key={v.id}>
+          {v.id}: {v.current}
+        </div>
+      ))}
     </Container>
   );
 });

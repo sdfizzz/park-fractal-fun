@@ -23,7 +23,9 @@
     ],
     "react/require-default-props": ["off"],
     "lines-between-class-members": ["off"],
-    "max-classes-per-file": ["off"]
+    "max-classes-per-file": ["off"],
+    "no-param-reassign": ["off"],
+    "prefer-const": ["off"]
   },
   "settings": {
     "import/resolver": {

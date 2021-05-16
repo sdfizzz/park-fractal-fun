@@ -8740,7 +8740,7 @@
   dependencies:
     "node-modules-regexp" "^1.0.0"
 
-"pixi.js@*", "pixi.js@^6.0.0":
+"pixi.js@*", "pixi.js@^6.0.0", "pixi.js@^6.0.4":
   "integrity" "sha512-zAlwr5x9xytaflmZiZWl/ZhlSf+lZzeJG+Hexa7Buf7cvEhHPfSITy4NNk0+qnMXKooQidikBmypShDsj2jAdg=="
   "resolved" "https://registry.npmjs.org/pixi.js/-/pixi.js-6.0.4.tgz"
   "version" "6.0.4"

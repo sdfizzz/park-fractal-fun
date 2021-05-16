@@ -1,38 +1,74 @@
 import { makeAutoObservable } from 'mobx';
-import { StoreType } from './config/types';
+import { InputConfigItemType, SliderConfigItemType, StoreType } from './config/types';
 import SliderConfigItem from './config/SliderConfigItem';
 import InputConfigItem from './config/InputConfigItem';
 
 class ObservableStore implements StoreType {
-  constructor() {
+  readonly screen: { width: number; height: number };
+  branch: { defaultLen: number; width: number } = { defaultLen: 100, width: 10 };
+  stroke: SliderConfigItemType = new SliderConfigItem(
+    'stroke',
+    3,
+    50,
+    1,
+    'stroke weight: %value',
+    7,
+    true
+  );
+  angle: SliderConfigItemType = new SliderConfigItem(
+    'angle',
+    0,
+    Math.PI * 2,
+    Math.PI / 360,
+    'angle: %value',
+    Math.PI / 2,
+    true,
+    (val) => `${Math.floor((val * 180) / Math.PI)}°`
+  );
+  branchCount: SliderConfigItemType = new SliderConfigItem(
+    'branch count',
+    1,
+    8,
+    1,
+    'branch count: %value',
+    2
+  );
+  branchLenCoef: SliderConfigItemType = new SliderConfigItem(
+    'branch len',
+    0.1,
+    1.0,
+    0.05,
+    'branch length coef: %value',
+    0.75,
+    true,
+    (val) => val.toFixed(2)
+  );
+  deep: SliderConfigItemType = new SliderConfigItem('deep', 1, 6, 1, 'deep: %value', 3);
+  text: InputConfigItemType = new InputConfigItem('text input', 'Type sm-th:', 'word');
+
+  constructor(width: number, height: number) {
     makeAutoObservable(this);
+
+    this.screen = { width, height };
   }
 
-  config = [
-    new SliderConfigItem('stroke', 3, 50, 1, 'stroke weight: %value', 7, true),
-    new SliderConfigItem(
-      'angle',
-      0,
-      Math.PI * 2,
-      Math.PI / 360,
-      'angle: %value',
-      Math.PI / 2,
-      true,
-      (val) => `${Math.floor((val * 180) / Math.PI)}°`
-    ),
-    new SliderConfigItem(
-      'branch len',
-      0.1,
-      1.0,
-      0.05,
-      'branch length coef: %value',
-      0.75,
-      true,
-      (val) => val.toFixed(2)
-    ),
-    new SliderConfigItem('deep', 1, 6, 1, 'deep: %value', 3),
-    new InputConfigItem('text input', 'Type sm-th:', 'word'),
-  ];
+  get sliders() {
+    return [this.stroke, this.angle, this.branchCount, this.branchLenCoef, this.deep];
+  }
+
+  get texts() {
+    return [this.text];
+  }
+
+  get config() {
+    return {
+      stroke: this.stroke.current,
+      angle: this.angle.current,
+      branchCount: this.branchCount.current,
+      branchLenCoef: this.branchLenCoef.current,
+      deep: this.deep.current,
+    };
+  }
 }
 
 export default ObservableStore;
