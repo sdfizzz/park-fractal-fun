@@ -1,16 +1,21 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useDebounceCallback } from '@react-hook/debounce';
 import { SliderConfigItemType } from '../../store/config/types';
 
 const SliderPixi = ({ config }: { config: SliderConfigItemType }) => {
   const { minVal, maxVal, step, title, animatable, format, current } = config;
   const [val, setVal] = useState<number>(current);
 
+  const debouncedRedrawOnChange = useDebounceCallback((value: number) => {
+    if (config.onChange) {
+      config.onChange(value);
+    }
+  });
+
   const onChangeInternal = (event: ChangeEvent<HTMLInputElement>) => {
     const newVal = parseFloat(event.target.value);
-    setVal(newVal);
-    if (config.onChange) {
-      config.onChange(newVal);
-    }
+    setVal(() => newVal);
+    debouncedRedrawOnChange(newVal);
   };
 
   return (

@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@inlet/react-pixi": "^6.5.2",
+    "@react-hook/debounce": "^3.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -43,7 +44,6 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
-    "@types/pixi.js": "^5.0.0",
     "@types/styled-components": "^5.1.9",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "18.2.1",
