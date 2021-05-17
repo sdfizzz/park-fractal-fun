@@ -54,5 +54,22 @@ function calculateBranch(options: {
   return result;
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { calculateBranch };
+function getBranchHitArea(direction: Direction, thickness: number = 10): Array<Point> {
+  const len = direction.length;
+
+  const sin = Math.sin(direction.angle - Math.PI / 2);
+  const cos = Math.cos(direction.angle - Math.PI / 2);
+
+  const rotate = ({ x, y }: Point): Point => ({ x: x * cos - y * sin, y: x * sin + y * cos });
+
+  const points: Array<Point> = [
+    { x: thickness / 2, y: 0 },
+    { x: -thickness / 2, y: 0 },
+    { x: -thickness / 2, y: len },
+    { x: thickness / 2, y: len },
+  ];
+
+  return points.map(rotate);
+}
+
+export { getBranchHitArea, calculateBranch };

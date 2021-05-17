@@ -1,16 +1,7 @@
 import { PixiComponent } from '@inlet/react-pixi';
 import * as PIXI from 'pixi.js';
-import { BranchProps, RectangleProps } from './types';
-
-const FractalItem = PixiComponent<RectangleProps, PIXI.Graphics>('FractalItem', {
-  create: () => new PIXI.Graphics(),
-  applyProps: (ins: PIXI.Graphics, _, props) => {
-    ins.x = props.x;
-    ins.beginFill(props.color);
-    ins.moveTo(0, 0);
-    ins.endFill();
-  },
-});
+import { BranchProps } from './types';
+import { getBranchHitArea } from '../../store/config/helper';
 
 const FractalBranch = PixiComponent<
   { item: BranchProps; onClick?: (branch: BranchProps) => void },
@@ -41,20 +32,29 @@ const FractalBranch = PixiComponent<
       // ins.scale.x *= 1.25;
       // ins.scale.y *= 1.25;
       if (props.onClick) props.onClick(props.item);
-      draw(0xff0000);
+      // draw(0xff0000);
     };
 
-    const sin = thickness * Math.sin(direction.angle);
-    const cos = thickness * Math.cos(direction.angle);
+    // @ts-ignore
+    ins.mouseover = () => {
+      ins.alpha = 0.5;
+    };
 
-    ins.hitArea = new PIXI.Polygon([
-      new PIXI.Point(-sin, -cos),
-      new PIXI.Point(sin, cos),
-      new PIXI.Point(direction.dx + sin, direction.dy + cos),
-      new PIXI.Point(direction.dx - sin, direction.dy - cos),
-      new PIXI.Point(-sin, -cos),
-    ]);
+    // @ts-ignore
+    ins.mouseout = () => {
+      ins.alpha = 1;
+    };
+
+    const hitAreaPoint = getBranchHitArea(direction, thickness);
+
+    // this block for showing hitArea
+    // ins.lineStyle(1, 0xff0000);
+    // ins.moveTo(0, 0);
+    // hitAreaPoint.forEach((p) => ins.lineTo(p.x, p.y));
+    // ins.lineTo(hitAreaPoint[0].x, hitAreaPoint[0].y);
+
+    ins.hitArea = new PIXI.Polygon(hitAreaPoint.map((p) => new PIXI.Point(p.x, p.y)));
   },
 });
 
-export { FractalItem, FractalBranch };
+export default FractalBranch;

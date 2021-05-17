@@ -2,7 +2,7 @@ import React from 'react';
 import { Stage } from '@inlet/react-pixi';
 import { observer } from 'mobx-react-lite';
 
-import { FractalBranch } from './FractalItem';
+import FractalBranch from './FractalBranch';
 import { useStore } from '../../store/StoreContext';
 import { BranchProps } from './types';
 import { ConfigProps } from '../../store/config/types';
