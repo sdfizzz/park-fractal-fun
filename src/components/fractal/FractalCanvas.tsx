@@ -75,6 +75,11 @@ const getFractalSet = (
 const FractalCanvas = observer(() => {
   const { screen, branch, config: conf } = useStore();
 
+  const onBranchClick = (val: BranchProps) => {
+    // eslint-disable-next-line no-console
+    console.log(val);
+  };
+
   return (
     <Stage
       width={screen.width}
