@@ -4,8 +4,9 @@ import { observer } from 'mobx-react-lite';
 
 import { FractalBranch } from './FractalItem';
 import { useStore } from '../../store/StoreContext';
-import { BranchProps, calculateBranch } from './types';
+import { BranchProps } from './types';
 import { ConfigProps } from '../../store/config/types';
+import { calculateBranch } from '../../store/config/helper';
 
 const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> => {
   const { angle, branchCount, branchLenCoef } = conf;
@@ -14,13 +15,15 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
   const childThickness = thickness * 0.9;
 
   const result = new Array<BranchProps>();
-  const stepAngle = angle / (branchCount - 1);
-  let angleCounter = branchCount % 2 > 0 ? 0 : stepAngle / 2;
+
+  let stepAngle = angle / (branchCount - 1);
+  let angleCounter = branchCount % 2 === 0 ? stepAngle / 2 : 0;
+
   for (let k = 0; k < Math.ceil(branchCount / 2); k += 1, angleCounter += stepAngle) {
     result.push(
       calculateBranch({
         start: head.end,
-        angle: angleCounter,
+        angle: head.direction.angle + angleCounter,
         deep: deep + 1,
         len: head.direction.length * branchLenCoef,
         thickness: childThickness,
@@ -31,7 +34,7 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
       result.push(
         calculateBranch({
           start: head.end,
-          angle: -angleCounter,
+          angle: head.direction.angle - angleCounter,
           deep: deep + 1,
           len: head.direction.length * branchLenCoef,
           thickness: childThickness,
@@ -54,7 +57,7 @@ const getFractalSet = (
 
   const firstBranch = calculateBranch({
     start: { x, y },
-    end: { x, y: y + height },
+    end: { x, y: height },
     deep: 0,
     thickness: conf.stroke,
   });
@@ -83,7 +86,7 @@ const FractalCanvas = observer(() => {
         { w: branch.width, h: branch.defaultLen },
         conf
       ).map((item, i) => (
-        <FractalBranch key={Math.random()} item={item} />
+        <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
       ))}
     </Stage>
   );
