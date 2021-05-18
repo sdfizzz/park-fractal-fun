@@ -33,5 +33,18 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["webpack.dev.js", "webpack.prod.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": ["webpack.dev.js", "webpack.prod.js", "webpack.common.js"]
+          }
+        ]
+      }
+    }
+  ]
 }
