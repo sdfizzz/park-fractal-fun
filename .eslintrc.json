@@ -13,19 +13,12 @@
         }
       }
     ],
-    "jsx-a11y/label-has-for": [
-      "error",
-      {
-        "required": {
-          "some": ["nesting", "id"]
-        }
-      }
-    ],
     "react/require-default-props": ["off"],
     "lines-between-class-members": ["off"],
     "max-classes-per-file": ["off"],
     "no-param-reassign": ["off"],
-    "prefer-const": ["off"]
+    "prefer-const": ["off"],
+    "jsx-a11y/label-has-for": ["off"]
   },
   "settings": {
     "import/resolver": {

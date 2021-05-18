@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import SideMenu from '../components/SideMenu';
+import SideMenu from '../components/menu/SideMenu';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FractalCanvas from '../components/fractal/FractalCanvas';
@@ -22,7 +22,7 @@ const Layout = styled.main`
   display: grid;
   min-height: 100%;
   grid-template-rows: 100px 1fr 100px;
-  grid-template-columns: 200px auto auto auto;
+  grid-template-columns: 330px auto auto auto;
   grid-template-areas:
     'header header header header'
     'menu content content content'

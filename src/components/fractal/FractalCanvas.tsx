@@ -88,7 +88,7 @@ const FractalCanvas = observer(() => {
     <Stage
       width={screen.width}
       height={screen.height}
-      options={{ antialias: true, autoDensity: true, backgroundColor: 0x202020 }}
+      options={{ antialias: true, autoDensity: true, transparent: true }}
     >
       {getFractalSet(
         { w: screen.width, h: screen.height },

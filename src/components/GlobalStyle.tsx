@@ -8,8 +8,8 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     font-family: 'PT Root UI', sans-serif;
     background: rgba(32, 32, 32, 1) url('/img/bg.svg') no-repeat;
-    background-size: contain;
-    color: rgba(255, 255, 255, 1);
+    background-size: cover;
+    color: #ffffff;
   }
 `;
 

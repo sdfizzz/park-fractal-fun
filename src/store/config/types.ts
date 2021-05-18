@@ -2,7 +2,6 @@ type ItemType = {
   id: string;
   type: string;
   title: string;
-  animatable?: boolean;
   current: string | number;
 };
 
@@ -10,8 +9,6 @@ type ConfigItemType<T> = ItemType & {
   current: T;
   format?: (val: T) => string;
   onChange?: (val: T) => void;
-  onAnimateStart?: () => void;
-  onAnimateEnd?: () => void;
 };
 
 type SliderConfigItemType = ConfigItemType<number> & {
