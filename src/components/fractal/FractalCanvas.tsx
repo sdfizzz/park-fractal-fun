@@ -13,6 +13,7 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
   const { thickness, deep } = head;
 
   const childThickness = thickness * 0.9;
+  const color = 0xffffff - (0xffffff - head.color) * 0.9;
 
   const result = new Array<BranchProps>();
 
@@ -27,6 +28,7 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
         deep: deep + 1,
         len: head.direction.length * branchLenCoef,
         thickness: childThickness,
+        color,
       })
     );
 
@@ -38,6 +40,7 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
           deep: deep + 1,
           len: head.direction.length * branchLenCoef,
           thickness: childThickness,
+          color,
         })
       );
     }
@@ -60,6 +63,7 @@ const getFractalSet = (
     end: { x, y: height },
     deep: 0,
     thickness: conf.stroke,
+    color: 0x000000,
   });
   const result = new Array<BranchProps>(firstBranch);
 
