@@ -4,31 +4,29 @@ import { BranchProps } from './types';
 import { getBranchHitArea } from '../../store/config/helper';
 
 const FractalBranch = PixiComponent<
-  { item: BranchProps; onClick?: (branch: BranchProps) => void },
+  { item: BranchProps; onClick?: (branch: BranchProps) => void; text?: string },
   PIXI.Graphics
 >('FractalBranch', {
-  create: () => {
+  create: (props) => {
     const graphics = new PIXI.Graphics();
     graphics.interactive = true;
     graphics.buttonMode = true;
 
-    return graphics;
-  },
-  applyProps: (ins: PIXI.Graphics, _, props) => {
     const { start, thickness, color, direction } = props.item;
 
     const draw = (c: number) => {
-      ins.clear();
-      ins.position.set(start.x, start.y);
-      ins.lineStyle(thickness, c);
-      ins.moveTo(0, 0);
-      ins.lineTo(direction.dx, direction.dy);
+      graphics.clear();
+
+      graphics.position.set(start.x, start.y);
+      graphics.lineStyle(thickness, c);
+      graphics.moveTo(0, 0);
+      graphics.lineTo(direction.dx, direction.dy);
     };
 
     draw(color);
 
     // @ts-ignore
-    ins.click = () => {
+    graphics.click = () => {
       // ins.scale.x *= 1.25;
       // ins.scale.y *= 1.25;
       if (props.onClick) props.onClick(props.item);
@@ -36,13 +34,13 @@ const FractalBranch = PixiComponent<
     };
 
     // @ts-ignore
-    ins.mouseover = () => {
-      ins.alpha = 0.5;
+    graphics.mouseover = () => {
+      graphics.alpha = 0.5;
     };
 
     // @ts-ignore
-    ins.mouseout = () => {
-      ins.alpha = 1;
+    graphics.mouseout = () => {
+      graphics.alpha = 1;
     };
 
     const hitAreaPoint = getBranchHitArea(direction, thickness);
@@ -53,7 +51,9 @@ const FractalBranch = PixiComponent<
     // hitAreaPoint.forEach((p) => ins.lineTo(p.x, p.y));
     // ins.lineTo(hitAreaPoint[0].x, hitAreaPoint[0].y);
 
-    ins.hitArea = new PIXI.Polygon(hitAreaPoint.map((p) => new PIXI.Point(p.x, p.y)));
+    graphics.hitArea = new PIXI.Polygon(hitAreaPoint.map((p) => new PIXI.Point(p.x, p.y)));
+
+    return graphics;
   },
 });
 

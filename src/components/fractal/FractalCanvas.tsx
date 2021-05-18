@@ -7,6 +7,7 @@ import { useStore } from '../../store/StoreContext';
 import { BranchProps } from './types';
 import { ConfigProps } from '../../store/config/types';
 import { calculateBranch } from '../../store/config/helper';
+import FractalText from './FractalText';
 
 const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> => {
   const { angle, branchCount, branchLenCoef } = conf;
@@ -77,12 +78,20 @@ const getFractalSet = (
 };
 
 const FractalCanvas = observer(() => {
-  const { screen, branch, config: conf } = useStore();
+  const { screen, branch, config, text } = useStore();
 
   const onBranchClick = (val: BranchProps) => {
     // eslint-disable-next-line no-console
     console.log(val);
   };
+
+  const fractalSet = getFractalSet(
+    { w: screen.width, h: screen.height },
+    { w: branch.width, h: branch.defaultLen },
+    config
+  );
+
+  const usedText = text.current;
 
   return (
     <Stage
@@ -90,13 +99,13 @@ const FractalCanvas = observer(() => {
       height={screen.height}
       options={{ antialias: true, autoDensity: true, transparent: true }}
     >
-      {getFractalSet(
-        { w: screen.width, h: screen.height },
-        { w: branch.width, h: branch.defaultLen },
-        conf
-      ).map((item) => (
-        <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
-      ))}
+      {usedText
+        ? fractalSet.map((item) => (
+            <FractalText key={Math.random()} item={item} text={usedText} onClick={onBranchClick} />
+          ))
+        : fractalSet.map((item) => (
+            <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
+          ))}
     </Stage>
   );
 });
