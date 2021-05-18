@@ -7,10 +7,10 @@ function calculateBranch(options: {
   angle?: number;
   len?: number;
   deep: number;
-  color?: number;
+  color: number;
   thickness: number;
 }): BranchProps {
-  const { start, end, angle, deep, len, thickness, color = 0x000000 } = options;
+  const { start, end, angle, deep, len, thickness, color } = options;
   let result: BranchProps = {
     start,
     end: start,

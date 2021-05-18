@@ -2,10 +2,10 @@ import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import { useDebounceCallback } from '@react-hook/debounce';
 import { InputConfigItemType } from '../../../store/config/types';
+import InputContainer from './common';
 
 const Label = styled.label`
-  display: grid;
-  grid-template-columns: 100px 1fr;
+  ${InputContainer}
 `;
 
 const Input = styled.input`

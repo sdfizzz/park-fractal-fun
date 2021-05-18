@@ -8,13 +8,16 @@ import { BranchProps } from './types';
 import { ConfigProps } from '../../store/config/types';
 import { calculateBranch } from '../../store/config/helper';
 import FractalText from './FractalText';
+import colorCalculator from './ColorCalculator';
 
 const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> => {
   const { angle, branchCount, branchLenCoef } = conf;
   const { thickness, deep } = head;
 
+  const branchesDeep = deep + 1;
   const childThickness = thickness * 0.9;
-  const color = 0xffffff - (0xffffff - head.color) * 0.9;
+  const len = head.direction.length * branchLenCoef;
+  const color = colorCalculator(branchesDeep, conf);
 
   const result = new Array<BranchProps>();
 
@@ -26,8 +29,8 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
       calculateBranch({
         start: head.end,
         angle: head.direction.angle + angleCounter,
-        deep: deep + 1,
-        len: head.direction.length * branchLenCoef,
+        deep: branchesDeep,
+        len,
         thickness: childThickness,
         color,
       })
@@ -38,8 +41,8 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
         calculateBranch({
           start: head.end,
           angle: head.direction.angle - angleCounter,
-          deep: deep + 1,
-          len: head.direction.length * branchLenCoef,
+          deep: branchesDeep,
+          len,
           thickness: childThickness,
           color,
         })
@@ -64,7 +67,7 @@ const getFractalSet = (
     end: { x, y: height },
     deep: 0,
     thickness: conf.stroke,
-    color: 0xffffff,
+    color: colorCalculator(0, conf),
   });
   const result = new Array<BranchProps>(firstBranch);
 
@@ -97,7 +100,7 @@ const FractalCanvas = observer(() => {
     <Stage
       width={screen.width}
       height={screen.height}
-      options={{ antialias: true, autoDensity: true, transparent: true }}
+      options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
     >
       {usedText
         ? fractalSet.map((item) => (

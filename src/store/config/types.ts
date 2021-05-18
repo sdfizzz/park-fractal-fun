@@ -27,6 +27,14 @@ type InputConfigItemType = ConfigItemType<string> & {
   type: 'input';
 };
 
+type Rgba = { r: number; g: number; b: number; a?: number };
+
+type ColorConfig = {
+  strategy: ColorStrategies;
+  gradientStart?: Rgba;
+  gradientEnd?: Rgba;
+};
+
 type StoreType = {
   screen: { width: number; height: number };
   branch: { defaultLen: number; width: number };
@@ -36,9 +44,11 @@ type StoreType = {
   branchLenCoef: SliderConfigItemType;
   deep: SliderConfigItemType;
   text: InputConfigItemType;
+  readonly color: ColorConfig;
   readonly sliders: Array<SliderConfigItemType>;
   readonly texts: Array<InputConfigItemType>;
   readonly config: ConfigProps;
+  setColorStrategy: (strategy: ColorStrategies) => void;
 };
 
 interface ConfigProps {
@@ -47,6 +57,14 @@ interface ConfigProps {
   branchCount: number;
   branchLenCoef: number;
   deep: number;
+  color: ColorConfig;
+}
+
+enum ColorStrategies {
+  WHITE,
+  GRADIENT_GRAY,
+  GRADIENT_COLOR,
+  RANDOM,
 }
 
 export type {
@@ -56,5 +74,9 @@ export type {
   DropdownConfigItemType,
   InputConfigItemType,
   StoreType,
+  ColorConfig,
   ConfigProps,
+  Rgba,
 };
+
+export { ColorStrategies };

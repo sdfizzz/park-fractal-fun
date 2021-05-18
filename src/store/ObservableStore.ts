@@ -1,5 +1,11 @@
 import { makeAutoObservable } from 'mobx';
-import { InputConfigItemType, SliderConfigItemType, StoreType } from './config/types';
+import {
+  ColorConfig,
+  ColorStrategies,
+  InputConfigItemType,
+  SliderConfigItemType,
+  StoreType,
+} from './config/types';
 import SliderConfigItem from './config/SliderConfigItem';
 import InputConfigItem from './config/InputConfigItem';
 
@@ -37,6 +43,7 @@ class ObservableStore implements StoreType {
   );
   deep: SliderConfigItemType = new SliderConfigItem('deep', 1, 6, 1, 'Iterations', 3);
   text: InputConfigItemType = new InputConfigItem('text', 'Text', 'word');
+  color: ColorConfig = { strategy: ColorStrategies.WHITE };
 
   constructor(width: number, height: number) {
     makeAutoObservable(this);
@@ -52,6 +59,39 @@ class ObservableStore implements StoreType {
     return [this.text];
   }
 
+  setColorStrategy(strategy: ColorStrategies) {
+    let gradient: Omit<ColorConfig, 'strategy'> = {};
+    if (strategy === ColorStrategies.GRADIENT_COLOR) {
+      gradient = {
+        gradientStart: {
+          r: Math.random(),
+          g: Math.random(),
+          b: Math.random(),
+        },
+        gradientEnd: {
+          r: Math.random(),
+          g: Math.random(),
+          b: Math.random(),
+        },
+      };
+    } else if (strategy === ColorStrategies.GRADIENT_GRAY) {
+      gradient = {
+        gradientStart: {
+          r: 1,
+          g: 1,
+          b: 1,
+        },
+        gradientEnd: {
+          r: 0,
+          g: 0,
+          b: 0,
+        },
+      };
+    }
+
+    this.color = { strategy, ...gradient };
+  }
+
   get config() {
     return {
       stroke: this.stroke.current,
@@ -59,6 +99,7 @@ class ObservableStore implements StoreType {
       branchCount: this.branchCount.current,
       branchLenCoef: this.branchLenCoef.current,
       deep: this.deep.current,
+      color: this.color,
     };
   }
 }

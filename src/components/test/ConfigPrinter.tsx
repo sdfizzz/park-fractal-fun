@@ -11,7 +11,6 @@ const Container = styled.div`
 
 const ConfigPrinter = observer(() => {
   const store = useStore();
-
   return (
     <Container>
       {store.sliders.map((v) => (
@@ -24,6 +23,7 @@ const ConfigPrinter = observer(() => {
           {v.id}: {v.current}
         </div>
       ))}
+      <div>store.color: {store.color.strategy}</div>
     </Container>
   );
 });
