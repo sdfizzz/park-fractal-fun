@@ -4,18 +4,27 @@ import styled from 'styled-components';
 
 const Container = styled.nav<{ area: string }>`
   grid-area: ${({ area }) => area};
-  display: flex;
-  align-items: center;
+  padding: 30px;
 
   > ul {
-    display: table-row;
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 
     > li {
-      display: table-cell;
+      float: left;
       height: 100px;
       list-style-type: none;
       padding: 10px;
       vertical-align: middle;
+
+      > a {
+        text-decoration: none;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+      }
     }
   }
 `;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.footer`
@@ -19,13 +20,11 @@ const ParkLogo = styled.img`
 
 const Footer = () => (
   <Container>
-    <a href="https://intuition.team/park">
+    <Link to="https://intuition.team/park">
       <ParkLogo src="img/park-logo.svg" alt="Intuition Park" />
-    </a>
+    </Link>
     <br />
-    <a href="">Вова,</a>
-    <a href="">Алексей и</a>
-    <a href="">Нелли</a>
+    <Link to="/">Вова</Link>, <Link to="/">Алексей</Link> и <Link to="/">Нелли</Link>
     <br />
     сделали этот проект для весеннего парка в 2021 году
   </Container>

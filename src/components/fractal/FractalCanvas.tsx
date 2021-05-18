@@ -63,7 +63,7 @@ const getFractalSet = (
     end: { x, y: height },
     deep: 0,
     thickness: conf.stroke,
-    color: 0x000000,
+    color: 0xffffff,
   });
   const result = new Array<BranchProps>(firstBranch);
 
@@ -88,13 +88,13 @@ const FractalCanvas = observer(() => {
     <Stage
       width={screen.width}
       height={screen.height}
-      options={{ antialias: true, autoDensity: true, backgroundColor: 0xeef1f5 }}
+      options={{ antialias: true, autoDensity: true, backgroundColor: 0x202020 }}
     >
       {getFractalSet(
         { w: screen.width, h: screen.height },
         { w: branch.width, h: branch.defaultLen },
         conf
-      ).map((item, i) => (
+      ).map((item) => (
         <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
       ))}
     </Stage>
