@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import SideMenu from '../components/SideMenu';
 import Header from '../components/Header';
@@ -7,6 +8,8 @@ import Footer from '../components/Footer';
 import FractalCanvas from '../components/fractal/FractalCanvas';
 import { StoreProvider } from '../store/StoreContext';
 import ConfigPrinter from '../components/test/ConfigPrinter';
+import Info from './Info';
+import GlobalStyle from '../components/GlobalStyle';
 
 const ContentContainer = styled.section`
   display: flex;
@@ -34,17 +37,31 @@ const Layout = styled.main`
 
 function App() {
   return (
-    <StoreProvider canvasSize={{ w: 800, h: 800 }}>
-      <Layout>
-        <Header area="header" />
-        <SideMenu area="menu" />
-        <ContentContainer>
-          <FractalCanvas />
-          <ConfigPrinter />
-        </ContentContainer>
-        <Footer area="footer" />
-      </Layout>
-    </StoreProvider>
+    <>
+      <GlobalStyle />
+      <Router>
+        <StoreProvider canvasSize={{ w: 800, h: 800 }}>
+          <Layout>
+            <Header area="header" />
+            <Switch>
+              <Route path="/" exact>
+                <>
+                  <SideMenu area="menu" />
+                  <ContentContainer>
+                    <FractalCanvas />
+                    <ConfigPrinter />
+                  </ContentContainer>
+                </>
+              </Route>
+              <Route path="/info">
+                <Info />
+              </Route>
+            </Switch>
+            <Footer />
+          </Layout>
+        </StoreProvider>
+      </Router>
+    </>
   );
 }
 
