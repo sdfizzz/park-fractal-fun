@@ -35,6 +35,11 @@ type ColorConfig = {
   gradientEnd?: Rgba;
 };
 
+type SvgConfig = {
+  src: string;
+  alt?: string;
+};
+
 type StoreType = {
   screen: { width: number; height: number };
   branch: { defaultLen: number; width: number };
@@ -44,6 +49,7 @@ type StoreType = {
   branchLenCoef: SliderConfigItemType;
   deep: SliderConfigItemType;
   text: InputConfigItemType;
+  svg: SvgConfig;
   readonly color: ColorConfig;
   readonly sliders: Array<SliderConfigItemType>;
   readonly texts: Array<InputConfigItemType>;
@@ -76,6 +82,7 @@ export type {
   StoreType,
   ColorConfig,
   ConfigProps,
+  SvgConfig,
   Rgba,
 };
 

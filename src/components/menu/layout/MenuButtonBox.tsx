@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { MenuBox } from './index';
 
-const MenuButton = styled.button`
+const MenuButton = styled.button<{ active?: boolean }>`
   width: 100%;
   text-align: center;
   color: currentColor;
@@ -14,6 +14,12 @@ const MenuButton = styled.button`
     background: rgba(82, 82, 84, 1);
     cursor: pointer;
   }
+
+  ${({ active }) =>
+    active &&
+    css`
+      background: rgba(75, 75, 78, 1);
+    `};
 `;
 
 const MenuButtonBox = styled(MenuBox)`

@@ -5,6 +5,7 @@ import {
   InputConfigItemType,
   SliderConfigItemType,
   StoreType,
+  SvgConfig,
 } from './config/types';
 import SliderConfigItem from './config/SliderConfigItem';
 import InputConfigItem from './config/InputConfigItem';
@@ -44,6 +45,7 @@ class ObservableStore implements StoreType {
   deep: SliderConfigItemType = new SliderConfigItem('deep', 1, 6, 1, 'Iterations', 3);
   text: InputConfigItemType = new InputConfigItem('text', 'Text', 'word');
   color: ColorConfig = { strategy: ColorStrategies.WHITE };
+  svg: SvgConfig = { src: '' };
 
   constructor(width: number, height: number) {
     makeAutoObservable(this);

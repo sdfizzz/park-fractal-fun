@@ -3,21 +3,13 @@ import styled from 'styled-components';
 import StoreContext from '../../store/StoreContext';
 import { TextInput, RangeInput, ColorSelector } from './controls';
 import { MenuBox, MenuButton, MenuButtonBox, MenuBoxItem } from './layout';
+import SymbolsButtonBox from './controls/SymbolsButtonBox';
 
 const Container = styled.div<{ area: string }>`
   grid-area: ${({ area }) => area};
   display: flex;
   flex-flow: column nowrap;
 `;
-
-const symbols = [
-  'img/integral.svg',
-  'img/df-dx.svg',
-  'img/empty.svg',
-  'img/sum.svg',
-  'img/f.svg',
-  'img/p.svg',
-];
 
 const SideMenu = ({ area }: { area: string }) => {
   const store = React.useContext(StoreContext);
@@ -41,13 +33,7 @@ const SideMenu = ({ area }: { area: string }) => {
           <ColorSelector />
         </MenuBoxItem>
       </MenuBox>
-      <MenuButtonBox>
-        {symbols.map((s) => (
-          <MenuButton type="button" key={Math.random()}>
-            <img src={s} alt="Intuition Park" />
-          </MenuButton>
-        ))}
-      </MenuButtonBox>
+      <SymbolsButtonBox />
       <MenuButtonBox>
         <MenuButton
           type="button"

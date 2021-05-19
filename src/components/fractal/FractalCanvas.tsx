@@ -9,6 +9,8 @@ import { ConfigProps } from '../../store/config/types';
 import { calculateBranch } from '../../store/config/helper';
 import FractalText from './FractalText';
 import colorCalculator from './ColorCalculator';
+import * as PIXI from 'pixi.js';
+import FractalSvg from './FractalSvg';
 
 const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> => {
   const { angle, branchCount, branchLenCoef } = conf;
@@ -81,7 +83,7 @@ const getFractalSet = (
 };
 
 const FractalCanvas = observer(() => {
-  const { screen, branch, config, text } = useStore();
+  const { screen, branch, config, text, svg } = useStore();
 
   const onBranchClick = (val: BranchProps) => {
     // eslint-disable-next-line no-console
@@ -94,7 +96,9 @@ const FractalCanvas = observer(() => {
     config
   );
 
-  const usedText = text.current;
+  const svgTexture = svg.src ? PIXI.Texture.from(svg.src) : null;
+  const usedText = !svgTexture ? text.current : null;
+  const branches = !svgTexture && !usedText;
 
   return (
     <Stage
@@ -102,13 +106,15 @@ const FractalCanvas = observer(() => {
       height={screen.height}
       options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
     >
-      {usedText
-        ? fractalSet.map((item) => (
-            <FractalText key={Math.random()} item={item} text={usedText} onClick={onBranchClick} />
-          ))
-        : fractalSet.map((item) => (
-            <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
-          ))}
+      {!!svgTexture && fractalSet.map((item) => <FractalSvg item={item} texture={svgTexture} />)}
+      {!!usedText &&
+        fractalSet.map((item) => (
+          <FractalText key={Math.random()} item={item} text={usedText} onClick={onBranchClick} />
+        ))}
+      {!!branches &&
+        fractalSet.map((item) => (
+          <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
+        ))}
     </Stage>
   );
 });
