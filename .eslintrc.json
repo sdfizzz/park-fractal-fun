@@ -4,7 +4,7 @@
   "rules": {
     "prettier/prettier": ["error"],
     "import/extensions": ["error", "never"],
-    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
@@ -18,7 +18,10 @@
     "max-classes-per-file": ["off"],
     "no-param-reassign": ["off"],
     "prefer-const": ["off"],
-    "jsx-a11y/label-has-for": ["off"]
+    "jsx-a11y/label-has-for": ["off"],
+    "import/no-extraneous-dependencies": 0,
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
     "import/resolver": {
@@ -26,18 +29,5 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
-  },
-  "overrides": [
-    {
-      "files": ["webpack.dev.js", "webpack.prod.js"],
-      "rules": {
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": ["webpack.dev.js", "webpack.prod.js", "webpack.common.js"]
-          }
-        ]
-      }
-    }
-  ]
+  }
 }

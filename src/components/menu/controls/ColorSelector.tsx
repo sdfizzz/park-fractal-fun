@@ -27,10 +27,10 @@ const Item = styled.div<{ active: boolean }>`
 `;
 
 const options = [
-  { value: ColorStrategies.WHITE, title: 'White' },
-  { value: ColorStrategies.GRADIENT_COLOR, title: 'Gradient color' },
   { value: ColorStrategies.GRADIENT_GRAY, title: 'Gradient gray' },
+  { value: ColorStrategies.GRADIENT_COLOR, title: 'Gradient color' },
   { value: ColorStrategies.RANDOM, title: 'Random' },
+  { value: ColorStrategies.WHITE, title: 'White' },
 ];
 
 const ColorSelector = () => {

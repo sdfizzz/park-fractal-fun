@@ -8,7 +8,7 @@ import {
 } from './config/types';
 import SliderConfigItem from './config/SliderConfigItem';
 import InputConfigItem from './config/InputConfigItem';
-import ColorStrategies from './config/colorStrategies';
+import ColorStrategies, { getColorConfig } from './config/colorStrategies';
 
 class ObservableStore implements StoreType {
   readonly screen: { width: number; height: number };
@@ -44,11 +44,7 @@ class ObservableStore implements StoreType {
   );
   deep: SliderConfigItemType = new SliderConfigItem('deep', 1, 6, 1, 'Iterations', 5);
   text: InputConfigItemType = new InputConfigItem('text', 'Text', '');
-  color: ColorConfig = {
-    strategy: ColorStrategies.GRADIENT_COLOR,
-    gradientStart: { r: Math.random(), g: Math.random(), b: Math.random() },
-    gradientEnd: { r: Math.random(), g: Math.random(), b: Math.random() },
-  };
+  color: ColorConfig = getColorConfig(ColorStrategies.GRADIENT_GRAY);
   svg: SvgConfig = { src: '', node: () => '' };
 
   constructor(width: number, height: number) {
@@ -66,36 +62,7 @@ class ObservableStore implements StoreType {
   }
 
   setColorStrategy(strategy: ColorStrategies) {
-    let gradient: Omit<ColorConfig, 'strategy'> = {};
-    if (strategy === ColorStrategies.GRADIENT_COLOR) {
-      gradient = {
-        gradientStart: {
-          r: Math.random(),
-          g: Math.random(),
-          b: Math.random(),
-        },
-        gradientEnd: {
-          r: Math.random(),
-          g: Math.random(),
-          b: Math.random(),
-        },
-      };
-    } else if (strategy === ColorStrategies.GRADIENT_GRAY) {
-      gradient = {
-        gradientStart: {
-          r: 1,
-          g: 1,
-          b: 1,
-        },
-        gradientEnd: {
-          r: 0,
-          g: 0,
-          b: 0,
-        },
-      };
-    }
-
-    this.color = { strategy, ...gradient };
+    this.color = getColorConfig(strategy);
   }
 
   get config() {

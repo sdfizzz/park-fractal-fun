@@ -1,5 +1,5 @@
-import { ConfigProps, Rgba } from '../../store/config/types';
 import { utils } from 'pixi.js';
+import { ConfigProps, Rgba } from '../../store/config/types';
 import ColorStrategies from '../../store/config/colorStrategies';
 
 function calculateGradient(k: number, start?: Rgba, end?: Rgba): number {

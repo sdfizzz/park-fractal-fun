@@ -39,7 +39,7 @@ const SideMenu = ({ area }: { area: string }) => {
         <MenuButton
           type="button"
           onClick={() => {
-            // @ts-ignore
+            // eslint-disable-next-line no-console
             console.log('save svg');
           }}
         >

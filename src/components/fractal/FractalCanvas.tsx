@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Stage } from '@inlet/react-pixi';
 import { observer } from 'mobx-react-lite';
-import * as PIXI from 'pixi.js';
 
 import { useStore } from '../../store/StoreContext';
 import { BranchProps } from './types';

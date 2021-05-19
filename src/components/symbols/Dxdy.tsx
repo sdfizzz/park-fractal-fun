@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Dxdy = (color: number) => {
   const currentColor = `"#${color.toString(16)}"`;
   return `<svg
