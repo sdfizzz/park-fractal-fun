@@ -9,6 +9,7 @@ const Container = styled.div<{ area: string }>`
   grid-area: ${({ area }) => area};
   display: flex;
   flex-flow: column nowrap;
+  z-index: 1;
 `;
 
 const SideMenu = ({ area }: { area: string }) => {
