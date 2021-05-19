@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { ColorStrategies } from '../../../store/config/types';
 import { useStore } from '../../../store/StoreContext';
+import ColorStrategies from '../../../store/config/colorStrategies';
 
 const Container = styled.div`
   background: rgba(98, 98, 100, 1);
@@ -35,7 +35,7 @@ const options = [
 
 const ColorSelector = () => {
   const store = useStore();
-  const [selected, setSelected] = useState<ColorStrategies>(ColorStrategies.WHITE);
+  const [selected, setSelected] = useState<ColorStrategies>(store.color.strategy);
 
   const onColorChanged = useCallback(
     (str: ColorStrategies) => {

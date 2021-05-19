@@ -7,8 +7,9 @@ const FractalSvg = PixiComponent<
   PIXI.Sprite
 >('FractalSvg', {
   create: (props) => {
+    // const texture2 = PIXI.Texture.from();
+
     const sprite = new PIXI.Sprite(props.texture);
-    console.log(props.texture);
     sprite.interactive = true;
     sprite.buttonMode = true;
 

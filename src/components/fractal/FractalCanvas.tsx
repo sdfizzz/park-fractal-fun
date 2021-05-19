@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stage } from '@inlet/react-pixi';
 import { observer } from 'mobx-react-lite';
+import * as PIXI from 'pixi.js';
 
-import FractalBranch from './FractalBranch';
 import { useStore } from '../../store/StoreContext';
 import { BranchProps } from './types';
 import { ConfigProps } from '../../store/config/types';
 import { calculateBranch } from '../../store/config/helper';
-import FractalText from './FractalText';
 import colorCalculator from './ColorCalculator';
-import * as PIXI from 'pixi.js';
+import FractalBranch from './FractalBranch';
+import FractalText from './FractalText';
 import FractalSvg from './FractalSvg';
 
-const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> => {
+const getBranchesAsync = async (
+  head: BranchProps,
+  conf: ConfigProps
+): Promise<Array<BranchProps>> => {
   const { angle, branchCount, branchLenCoef } = conf;
   const { thickness, deep } = head;
 
@@ -21,13 +24,13 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
   const len = head.direction.length * branchLenCoef;
   const color = colorCalculator(branchesDeep, conf);
 
-  const result = new Array<BranchProps>();
+  const promises = new Array<Promise<BranchProps>>();
 
   let stepAngle = angle / (branchCount - 1);
   let angleCounter = branchCount % 2 === 0 ? stepAngle / 2 : 0;
 
   for (let k = 0; k < Math.ceil(branchCount / 2); k += 1, angleCounter += stepAngle) {
-    result.push(
+    promises.push(
       calculateBranch({
         start: head.end,
         angle: head.direction.angle + angleCounter,
@@ -39,7 +42,7 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
     );
 
     if (angleCounter !== 0) {
-      result.push(
+      promises.push(
         calculateBranch({
           start: head.end,
           angle: head.direction.angle - angleCounter,
@@ -52,21 +55,20 @@ const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> =
     }
   }
 
-  return result;
+  return Promise.all(promises);
 };
 
-const getFractalSet = (
+const getFractalSet = async (
   screen: { w: number; h: number },
   branch: { w: number; h: number },
   conf: ConfigProps
-): Array<BranchProps> => {
+): Promise<BranchProps[]> => {
   let x = screen.w / 2;
-  let y = 0;
-  let height = branch.h;
+  let y = (screen.h * 3) / 4;
 
-  const firstBranch = calculateBranch({
+  const firstBranch = await calculateBranch({
     start: { x, y },
-    end: { x, y: height },
+    end: { x, y: y - branch.h },
     deep: 0,
     thickness: conf.stroke,
     color: colorCalculator(0, conf),
@@ -76,7 +78,11 @@ const getFractalSet = (
   let lastBranch = result;
 
   for (let i = 1; i < conf.deep; i += 1) {
-    lastBranch = lastBranch.map((v) => getBranches(v, conf)).flat();
+    const promises: Promise<Array<BranchProps>>[] = lastBranch.map((v) =>
+      getBranchesAsync(v, conf)
+    );
+    // eslint-disable-next-line no-await-in-loop
+    lastBranch = await Promise.all(promises).then((arr) => arr.flat());
     result.push(...lastBranch);
   }
   return result;
@@ -84,17 +90,43 @@ const getFractalSet = (
 
 const FractalCanvas = observer(() => {
   const { screen, branch, config, text, svg } = useStore();
+  const [fractalSet, setFractalSet] = useState<Array<BranchProps>>([]);
 
   const onBranchClick = (val: BranchProps) => {
     // eslint-disable-next-line no-console
     console.log(val);
   };
 
-  const fractalSet = getFractalSet(
-    { w: screen.width, h: screen.height },
-    { w: branch.width, h: branch.defaultLen },
-    config
-  );
+  useEffect(() => {
+    const ret: { promise?: Promise<Array<BranchProps>>; cancel?: () => void } = {};
+    const signal = new Promise((resolve, reject) => {
+      ret.cancel = () => {
+        reject(new Error('Calc branches cancelled'));
+      };
+    });
+
+    ret.promise = new Promise<Array<BranchProps>>((resolve, reject) => {
+      signal.catch((err) => {
+        reject(err);
+      });
+
+      getFractalSet(
+        { w: screen.width, h: screen.height },
+        { w: branch.width, h: branch.defaultLen },
+        config
+      ).then((r) => resolve(r));
+    });
+
+    ret.promise
+      .then((set) => {
+        setFractalSet(set);
+      })
+      .catch(() => {});
+
+    return () => {
+      if (ret.cancel) ret.cancel();
+    };
+  }, [config, screen, branch]);
 
   const svgTexture = svg.src ? PIXI.Texture.from(svg.src) : null;
   const usedText = !svgTexture ? text.current : null;
@@ -106,12 +138,15 @@ const FractalCanvas = observer(() => {
       height={screen.height}
       options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
     >
-      {!!svgTexture && fractalSet.map((item) => <FractalSvg item={item} texture={svgTexture} />)}
+      {!!svgTexture &&
+        fractalSet.map((item) => (
+          <FractalSvg key={Math.random()} item={item} texture={svgTexture} />
+        ))}
       {!!usedText &&
         fractalSet.map((item) => (
           <FractalText key={Math.random()} item={item} text={usedText} onClick={onBranchClick} />
         ))}
-      {!!branches &&
+      {branches &&
         fractalSet.map((item) => (
           <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
         ))}

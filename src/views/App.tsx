@@ -40,7 +40,7 @@ function App() {
     <>
       <GlobalStyle />
       <Router>
-        <StoreProvider canvasSize={{ w: 800, h: 800 }}>
+        <StoreProvider canvasSize={{ w: 1200, h: 1200 }}>
           <Layout>
             <Header area="header" />
             <Switch>

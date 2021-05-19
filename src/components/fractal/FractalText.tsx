@@ -12,14 +12,24 @@ const FractalText = PixiComponent<
     const style = new PIXI.TextStyle();
     style.fontSize = 2 * thickness;
     style.fill = color;
+    style.stroke = color;
+    style.align = 'center';
 
     const text = new PIXI.Text(props.text, style);
     text.interactive = true;
     text.buttonMode = true;
 
-    text.transform.position.set((start.x + end.x) / 2, (start.y + end.y) / 2);
+    const position = {
+      x: (start.x + end.x) / 2,
+      y: (start.y + end.y - text.height) / 2,
+    };
+    text.transform.position.set(position.x, position.y);
     text.transform.rotation = direction.angle;
 
+    // @ts-ignore
+    text.click = () => {
+      console.log(position, start, end);
+    };
     return text;
   },
 });

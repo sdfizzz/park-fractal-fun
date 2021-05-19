@@ -9,49 +9,51 @@ function calculateBranch(options: {
   deep: number;
   color: number;
   thickness: number;
-}): BranchProps {
-  const { start, end, angle, deep, len, thickness, color } = options;
-  let result: BranchProps = {
-    start,
-    end: start,
-    deep,
-    direction: new Direction(),
-    color,
-    thickness,
-  };
-
-  if (end !== undefined) {
-    const direction = new Direction(end.x - start.x, end.y - start.y);
-    result = {
+}): Promise<BranchProps> {
+  return new Promise<BranchProps>((resolve) => {
+    const { start, end, angle, deep, len, thickness, color } = options;
+    let result: BranchProps = {
       start,
-      end,
-      direction,
+      end: start,
       deep,
+      direction: new Direction(),
       color,
       thickness,
     };
-  }
 
-  if (angle !== undefined) {
-    const norm = new Direction(Math.cos(angle), Math.sin(angle));
-    const direction = len !== undefined ? norm.multiply(len) : norm;
+    if (end !== undefined) {
+      const direction = new Direction(end.x - start.x, end.y - start.y);
+      result = {
+        start,
+        end,
+        direction,
+        deep,
+        color,
+        thickness,
+      };
+    }
 
-    const endByDirection = {
-      x: start.x + direction.dx,
-      y: start.y + direction.dy,
-    };
+    if (angle !== undefined) {
+      const norm = new Direction(Math.cos(angle), Math.sin(angle));
+      const direction = len !== undefined ? norm.multiply(len) : norm;
 
-    result = {
-      start,
-      end: endByDirection,
-      direction,
-      deep,
-      color,
-      thickness,
-    };
-  }
+      const endByDirection = {
+        x: start.x + direction.dx,
+        y: start.y + direction.dy,
+      };
 
-  return result;
+      result = {
+        start,
+        end: endByDirection,
+        direction,
+        deep,
+        color,
+        thickness,
+      };
+    }
+
+    resolve(result);
+  });
 }
 
 function getBranchHitArea(direction: Direction, thickness: number = 10): Array<Point> {

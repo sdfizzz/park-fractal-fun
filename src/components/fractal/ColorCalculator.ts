@@ -1,5 +1,6 @@
-import { ColorStrategies, ConfigProps, Rgba } from '../../store/config/types';
+import { ConfigProps, Rgba } from '../../store/config/types';
 import { utils } from 'pixi.js';
+import ColorStrategies from '../../store/config/colorStrategies';
 
 function calculateGradient(k: number, start?: Rgba, end?: Rgba): number {
   if (!start || !end) return 0;
@@ -10,12 +11,12 @@ function calculateGradient(k: number, start?: Rgba, end?: Rgba): number {
   return utils.rgb2hex([r, g, b]);
 }
 
-function colorCalculator(deep: number, config: ConfigProps) {
+function colorCalculator(branchDeep: number, config: ConfigProps) {
   const { strategy, gradientStart, gradientEnd } = config.color;
 
   if (strategy === ColorStrategies.GRADIENT_GRAY || strategy === ColorStrategies.GRADIENT_COLOR) {
-    const { branchCount } = config;
-    const k = 1 - deep / branchCount;
+    const { deep } = config;
+    const k = 1 - branchDeep / deep;
     return calculateGradient(k, gradientStart, gradientEnd);
   }
 

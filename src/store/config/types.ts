@@ -1,3 +1,5 @@
+import ColorStrategies from './colorStrategies';
+
 type ItemType = {
   id: string;
   type: string;
@@ -66,13 +68,6 @@ interface ConfigProps {
   color: ColorConfig;
 }
 
-enum ColorStrategies {
-  WHITE,
-  GRADIENT_GRAY,
-  GRADIENT_COLOR,
-  RANDOM,
-}
-
 export type {
   ItemType,
   ConfigItemType,
@@ -85,5 +80,3 @@ export type {
   SvgConfig,
   Rgba,
 };
-
-export { ColorStrategies };

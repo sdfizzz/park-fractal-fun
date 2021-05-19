@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import {
   ColorConfig,
-  ColorStrategies,
   InputConfigItemType,
   SliderConfigItemType,
   StoreType,
@@ -9,6 +8,7 @@ import {
 } from './config/types';
 import SliderConfigItem from './config/SliderConfigItem';
 import InputConfigItem from './config/InputConfigItem';
+import ColorStrategies from './config/colorStrategies';
 
 class ObservableStore implements StoreType {
   readonly screen: { width: number; height: number };
@@ -20,17 +20,17 @@ class ObservableStore implements StoreType {
     Math.PI * 2,
     Math.PI / 360,
     'Angle',
-    Math.PI / 2,
+    (2 * Math.PI) / 3,
     true,
     (val) => `${Math.floor((val * 180) / Math.PI)}°`
   );
   branchCount: SliderConfigItemType = new SliderConfigItem(
     'branch count',
     1,
-    8,
+    6,
     1,
     'Lines count',
-    2
+    3
   );
   branchLenCoef: SliderConfigItemType = new SliderConfigItem(
     'branch len',
@@ -42,9 +42,13 @@ class ObservableStore implements StoreType {
     true,
     (val) => val.toFixed(2)
   );
-  deep: SliderConfigItemType = new SliderConfigItem('deep', 1, 6, 1, 'Iterations', 3);
-  text: InputConfigItemType = new InputConfigItem('text', 'Text', 'word');
-  color: ColorConfig = { strategy: ColorStrategies.WHITE };
+  deep: SliderConfigItemType = new SliderConfigItem('deep', 1, 6, 1, 'Iterations', 5);
+  text: InputConfigItemType = new InputConfigItem('text', 'Text', '');
+  color: ColorConfig = {
+    strategy: ColorStrategies.GRADIENT_COLOR,
+    gradientStart: { r: Math.random(), g: Math.random(), b: Math.random() },
+    gradientEnd: { r: Math.random(), g: Math.random(), b: Math.random() },
+  };
   svg: SvgConfig = { src: '' };
 
   constructor(width: number, height: number) {
