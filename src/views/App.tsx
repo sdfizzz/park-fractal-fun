@@ -7,7 +7,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FractalCanvas from '../components/fractal/FractalCanvas';
 import { StoreProvider } from '../store/StoreContext';
-import ConfigPrinter from '../components/test/ConfigPrinter';
 import Info from './Info';
 import GlobalStyle from '../components/GlobalStyle';
 
@@ -21,17 +20,17 @@ const ContentContainer = styled.section`
 const Layout = styled.main`
   display: grid;
   min-height: 100%;
-  grid-template-rows: 100px 1fr 100px;
-  grid-template-columns: 330px auto auto auto;
+  grid-template-rows: [left] auto 1fr [right];
+  grid-template-columns: [top] 330px auto auto auto [bottom];
   grid-template-areas:
     'header header header header'
-    'menu content content content'
-    'footer footer footer footer';
+    'menu content content content';
 
   grid-gap: 10px;
 
   ${ContentContainer} {
-    grid-area: content;
+    grid-row: left / right;
+    grid-column: top / bottom;
   }
 `;
 
@@ -40,7 +39,7 @@ function App() {
     <>
       <GlobalStyle />
       <Router>
-        <StoreProvider canvasSize={{ w: 1200, h: 1200 }}>
+        <StoreProvider canvasSize={{ w: 800, h: 800 }}>
           <Layout>
             <Header area="header" />
             <Switch>
@@ -49,7 +48,6 @@ function App() {
                   <SideMenu area="menu" />
                   <ContentContainer>
                     <FractalCanvas />
-                    <ConfigPrinter />
                   </ContentContainer>
                 </>
               </Route>
