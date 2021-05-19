@@ -128,9 +128,9 @@ const FractalCanvas = observer(() => {
     };
   }, [config, screen, branch]);
 
-  const svgTexture = svg.src ? PIXI.Texture.from(svg.src) : null;
-  const usedText = !svgTexture ? text.current : null;
-  const branches = !svgTexture && !usedText;
+  const svgSrc = svg.src;
+  const usedText = !svgSrc ? text.current : null;
+  const branches = !svgSrc && !usedText;
 
   return (
     <Stage
@@ -138,9 +138,9 @@ const FractalCanvas = observer(() => {
       height={screen.height}
       options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
     >
-      {!!svgTexture &&
+      {!!svgSrc &&
         fractalSet.map((item) => (
-          <FractalSvg key={Math.random()} item={item} texture={svgTexture} />
+          <FractalSvg key={Math.random()} svg={svg} item={item} onClick={onBranchClick} />
         ))}
       {!!usedText &&
         fractalSet.map((item) => (

@@ -49,7 +49,7 @@ class ObservableStore implements StoreType {
     gradientStart: { r: Math.random(), g: Math.random(), b: Math.random() },
     gradientEnd: { r: Math.random(), g: Math.random(), b: Math.random() },
   };
-  svg: SvgConfig = { src: '' };
+  svg: SvgConfig = { src: '', node: () => '' };
 
   constructor(width: number, height: number) {
     makeAutoObservable(this);

@@ -40,6 +40,7 @@ type ColorConfig = {
 type SvgConfig = {
   src: string;
   alt?: string;
+  node?: (color: number) => string;
 };
 
 type StoreType = {

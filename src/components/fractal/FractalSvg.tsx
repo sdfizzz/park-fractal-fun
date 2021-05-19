@@ -1,17 +1,29 @@
 import * as PIXI from 'pixi.js';
 import { PixiComponent } from '@inlet/react-pixi';
 import { BranchProps } from './types';
+import { SvgConfig } from '../../store/config/types';
 
 const FractalSvg = PixiComponent<
-  { item: BranchProps; onClick?: (branch: BranchProps) => void; texture: PIXI.Texture },
+  { item: BranchProps; svg: SvgConfig; onClick?: (branch: BranchProps) => void },
   PIXI.Sprite
 >('FractalSvg', {
   create: (props) => {
-    // const texture2 = PIXI.Texture.from();
+    const blob = props.svg.node
+      ? new Blob([props.svg.node(props.item.color)], {
+          type: 'image/svg+xml',
+        })
+      : null;
+    const url = URL.createObjectURL(blob);
+    const texture = PIXI.Texture.from(url);
 
-    const sprite = new PIXI.Sprite(props.texture);
+    const sprite = new PIXI.Sprite(texture);
     sprite.interactive = true;
     sprite.buttonMode = true;
+
+    // @ts-ignore
+    sprite.click = () => {
+      console.log(props.item);
+    };
 
     const { start, end, direction, thickness } = props.item;
     sprite.transform.position.set((start.x + end.x) / 2, (start.y + end.y) / 2);
