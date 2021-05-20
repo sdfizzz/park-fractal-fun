@@ -82,7 +82,7 @@ const getFractalSet = async (
     );
     // eslint-disable-next-line no-await-in-loop
     lastBranch = await Promise.all(promises).then((arr) => arr.flat());
-    result.push(...lastBranch);
+    result.unshift(...lastBranch);
   }
   return result;
 };
