@@ -1,8 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 import { MenuButton, MenuButtonBox } from '../layout';
 import { useStore } from '../../../store/StoreContext';
 import { SvgConfig } from '../../../store/config/types';
 import { symbols } from '../../symbols';
+
+const Image = styled.img`
+  max-width: 80%;
+`;
 
 const SymbolsButtonBox = () => {
   const store = useStore();
@@ -23,7 +28,7 @@ const SymbolsButtonBox = () => {
           onClick={() => handleSymbolButtonClick(s)}
           active={symbol === s}
         >
-          <img src={s.src} alt={s.alt} />
+          <Image src={s.src} alt={s.alt} />
         </MenuButton>
       ))}
     </MenuButtonBox>

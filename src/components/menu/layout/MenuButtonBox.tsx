@@ -3,7 +3,9 @@ import { MenuBox } from './index';
 
 const MenuButton = styled.button<{ active?: boolean }>`
   width: 100%;
+  height: 100%;
   text-align: center;
+  margin: auto;
   color: currentColor;
 
   background: transparent;
@@ -11,7 +13,7 @@ const MenuButton = styled.button<{ active?: boolean }>`
   box-sizing: border-box;
 
   &:hover {
-    background: rgba(82, 82, 84, 1);
+    background-color: rgba(82, 82, 84, 1);
     cursor: pointer;
   }
 

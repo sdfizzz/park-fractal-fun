@@ -128,19 +128,19 @@ const FractalCanvas = observer(() => {
   }, [config, screen, branch]);
 
   const svgSrc = svg.src;
-  const usedText = !svgSrc ? text.current : null;
+  const usedText = svgSrc ? svg.symbol : text.current;
   const branches = !svgSrc && !usedText;
 
+  // {!!svgSrc &&
+  // fractalSet.map((item) => (
+  //   <FractalSvg key={Math.random()} svg={svg} item={item} onClick={onBranchClick} />
+  // ))}
   return (
     <Stage
       width={screen.width}
       height={screen.height}
       options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
     >
-      {!!svgSrc &&
-        fractalSet.map((item) => (
-          <FractalSvg key={Math.random()} svg={svg} item={item} onClick={onBranchClick} />
-        ))}
       {!!usedText &&
         fractalSet.map((item) => (
           <FractalText key={Math.random()} item={item} text={usedText} onClick={onBranchClick} />

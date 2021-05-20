@@ -41,6 +41,7 @@ type SvgConfig = {
   src: string;
   alt?: string;
   node?: (color: number) => string;
+  symbol?: string;
 };
 
 type StoreType = {
