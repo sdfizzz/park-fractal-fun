@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ForwardedRef, useEffect, useState } from 'react';
 import { Stage } from '@inlet/react-pixi';
 import { observer } from 'mobx-react-lite';
 
@@ -9,7 +9,6 @@ import { calculateBranch } from '../../store/config/helper';
 import colorCalculator from './ColorCalculator';
 import FractalBranch from './FractalBranch';
 import FractalText from './FractalText';
-import FractalSvg from './FractalSvg';
 
 const getBranchesAsync = async (
   head: BranchProps,
@@ -87,70 +86,70 @@ const getFractalSet = async (
   return result;
 };
 
-const FractalCanvas = observer(() => {
-  const { screen, branch, config, text, svg } = useStore();
-  const [fractalSet, setFractalSet] = useState<Array<BranchProps>>([]);
+const FractalCanvas = observer<{}, Stage>(
+  (_, ref) => {
+    const { screen, branch, config, text, svg } = useStore();
+    const [fractalSet, setFractalSet] = useState<Array<BranchProps>>([]);
 
-  const onBranchClick = (val: BranchProps) => {
-    // eslint-disable-next-line no-console
-    console.log(val);
-  };
+    const onBranchClick = (val: BranchProps) => {
+      // eslint-disable-next-line no-console
+      console.log(val);
+    };
 
-  useEffect(() => {
-    const ret: { promise?: Promise<Array<BranchProps>>; cancel?: () => void } = {};
-    const signal = new Promise((resolve, reject) => {
-      ret.cancel = () => {
-        reject(new Error('Calc branches cancelled'));
-      };
-    });
-
-    ret.promise = new Promise<Array<BranchProps>>((resolve, reject) => {
-      signal.catch((err) => {
-        reject(err);
+    useEffect(() => {
+      const ret: { promise?: Promise<Array<BranchProps>>; cancel?: () => void } = {};
+      const signal = new Promise((resolve, reject) => {
+        ret.cancel = () => {
+          reject(new Error('Calc branches cancelled'));
+        };
       });
 
-      getFractalSet(
-        { w: screen.width, h: screen.height },
-        { w: branch.width, h: branch.defaultLen },
-        config
-      ).then((r) => resolve(r));
-    });
+      ret.promise = new Promise<Array<BranchProps>>((resolve, reject) => {
+        signal.catch((err) => {
+          reject(err);
+        });
 
-    ret.promise
-      .then((set) => {
-        setFractalSet(set);
-      })
-      .catch(() => {});
+        getFractalSet(
+          { w: screen.width, h: screen.height },
+          { w: branch.width, h: branch.defaultLen },
+          config
+        ).then((r) => resolve(r));
+      });
 
-    return () => {
-      if (ret.cancel) ret.cancel();
-    };
-  }, [config, screen, branch]);
+      ret.promise
+        .then((set) => {
+          setFractalSet(set);
+        })
+        .catch(() => {});
 
-  const svgSrc = svg.src;
-  const usedText = svgSrc ? svg.symbol : text.current;
-  const branches = !svgSrc && !usedText;
+      return () => {
+        if (ret.cancel) ret.cancel();
+      };
+    }, [config, screen, branch]);
 
-  // {!!svgSrc &&
-  // fractalSet.map((item) => (
-  //   <FractalSvg key={Math.random()} svg={svg} item={item} onClick={onBranchClick} />
-  // ))}
-  return (
-    <Stage
-      width={screen.width}
-      height={screen.height}
-      options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
-    >
-      {!!usedText &&
-        fractalSet.map((item) => (
-          <FractalText key={Math.random()} item={item} text={usedText} onClick={onBranchClick} />
-        ))}
-      {branches &&
-        fractalSet.map((item) => (
-          <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
-        ))}
-    </Stage>
-  );
-});
+    const svgSrc = svg.src;
+    const usedText = svgSrc ? svg.symbol : text.current;
+    const branches = !svgSrc && !usedText;
+
+    return (
+      <Stage
+        width={screen.width}
+        height={screen.height}
+        options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
+        ref={ref}
+      >
+        {!!usedText &&
+          fractalSet.map((item) => (
+            <FractalText key={Math.random()} item={item} text={usedText} onClick={onBranchClick} />
+          ))}
+        {branches &&
+          fractalSet.map((item) => (
+            <FractalBranch key={Math.random()} item={item} onClick={onBranchClick} />
+          ))}
+      </Stage>
+    );
+  },
+  { forwardRef: true }
+);
 
 export default FractalCanvas;

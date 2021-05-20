@@ -28,8 +28,7 @@ const FractalText = PixiComponent<
 
     // @ts-ignore
     text.click = () => {
-      // eslint-disable-next-line no-console
-      console.log(position, start, end);
+      // TODO add some on click
     };
     return text;
   },

@@ -22,8 +22,7 @@ const FractalSvg = PixiComponent<
 
     // @ts-ignore
     sprite.click = () => {
-      // eslint-disable-next-line no-console
-      console.log(props.item);
+      // TODO add some on click
     };
 
     const { start, end, direction, thickness } = props.item;

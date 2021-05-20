@@ -5,18 +5,17 @@ import { TextInput, RangeInput, ColorSelector } from './controls';
 import { MenuBox, MenuButton, MenuButtonBox, MenuBoxItem } from './layout';
 import SymbolsButtonBox from './controls/SymbolsButtonBox';
 
-const Container = styled.div<{ area: string }>`
-  grid-area: ${({ area }) => area};
+const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
   z-index: 1;
 `;
 
-const SideMenu = ({ area }: { area: string }) => {
+const SideMenu = ({ onSaveClick, className }: { onSaveClick: () => void; className?: string }) => {
   const store = React.useContext(StoreContext);
 
   return (
-    <Container area={area}>
+    <Container className={className}>
       <MenuBox>
         <MenuBoxItem>
           <TextInput config={store.text} />
@@ -36,14 +35,8 @@ const SideMenu = ({ area }: { area: string }) => {
       </MenuBox>
       <SymbolsButtonBox />
       <MenuButtonBox>
-        <MenuButton
-          type="button"
-          onClick={() => {
-            // eslint-disable-next-line no-console
-            console.log('save svg');
-          }}
-        >
-          Save SVG
+        <MenuButton type="button" onClick={onSaveClick}>
+          Save
         </MenuButton>
       </MenuButtonBox>
     </Container>
