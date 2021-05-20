@@ -18,13 +18,20 @@ const ParkLogo = styled.img`
   height: 40px;
 `;
 
+const StyledLink = styled(Link)`
+  :visited {
+    color: currentColor;
+  }
+`;
+
 const Footer = () => (
   <Container>
     <Link to="https://intuition.team/park">
       <ParkLogo src="img/park-logo.svg" alt="Intuition Park" />
     </Link>
     <br />
-    <Link to="/">Вова</Link>, <Link to="/">Алексей</Link> и <Link to="/">Нелли</Link>
+    <StyledLink to="/">Вова</StyledLink>, <StyledLink to="/">Алексей</StyledLink> и{' '}
+    <StyledLink to="/">Нелли</StyledLink>
     <br />
     сделали этот проект для весеннего парка в 2021 году
   </Container>
