@@ -8,7 +8,8 @@ const Container = styled.nav<{ area: string }>`
 
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  justify-content: flex-end;
+  margin-right: 20px;
 `;
 
 const StyledLink = styled(Link)`
