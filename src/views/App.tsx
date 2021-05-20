@@ -13,24 +13,23 @@ import GlobalStyle from '../components/GlobalStyle';
 const ContentContainer = styled.section`
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
 `;
 
 const Layout = styled.main`
   display: grid;
   min-height: 100%;
-  grid-template-rows: [left] auto 1fr [right];
-  grid-template-columns: [top] 330px auto auto auto [bottom];
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 330px 60px auto auto;
   grid-template-areas:
     'header header header header'
-    'menu content content content';
+    'menu . content content';
 
   grid-gap: 10px;
 
   ${ContentContainer} {
-    grid-row: left / right;
-    grid-column: top / bottom;
+    grid-area: content;
   }
 `;
 
