@@ -18,10 +18,28 @@ const StyledInput = styled.input`
   opacity: 0.7;
   transition: opacity 0.2s;
   appearance: none;
+  cursor: grabbing;
 
   &:hover {
     opacity: 1;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
     cursor: grabbing;
+    border-radius: 12px;
+    width: 15px;
+    height: 15px;
+    background: rgba(156, 156, 161, 1);
+  }
+
+  &::-moz-range-thumb {
+    appearance: none;
+    cursor: grabbing;
+    border-radius: 12px;
+    width: 15px;
+    height: 15px;
+    background: rgba(156, 156, 161, 1);
   }
 `;
 
