@@ -14,7 +14,7 @@ function App() {
       <GlobalStyle />
       <Router>
         <StoreProvider canvasSize={{ w: 800, h: 800 }}>
-          <Header area="header" />
+          <Header />
           <Switch>
             <Route path="/" exact>
               <PixiApp />

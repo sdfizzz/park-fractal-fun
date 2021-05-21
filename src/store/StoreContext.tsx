@@ -1,7 +1,12 @@
 import React from 'react';
+import { configure } from 'mobx';
 import { useLocalObservable } from 'mobx-react-lite';
 import ObservableStore from './ObservableStore';
 import { StoreType } from './config/types';
+
+configure({
+  enforceActions: 'never',
+});
 
 const StoreContext = React.createContext<StoreType>(new ObservableStore(0, 0));
 

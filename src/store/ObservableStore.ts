@@ -12,7 +12,7 @@ import ColorStrategies, { getColorConfig } from './config/colorStrategies';
 
 class ObservableStore implements StoreType {
   readonly screen: { width: number; height: number };
-  branch: { defaultLen: number; width: number } = { defaultLen: 100, width: 10 };
+  readonly branch: { defaultLen: number; width: number } = { defaultLen: 100, width: 10 };
   stroke: SliderConfigItemType = new SliderConfigItem('stroke', 3, 50, 1, 'Stroke', 7, true);
   angle: SliderConfigItemType = new SliderConfigItem(
     'angle',
@@ -43,7 +43,7 @@ class ObservableStore implements StoreType {
     (val) => val.toFixed(2)
   );
   deep: SliderConfigItemType = new SliderConfigItem('deep', 1, 6, 1, 'Iterations', 5);
-  text: InputConfigItemType = new InputConfigItem('text', 'Text', '');
+  text: InputConfigItemType = new InputConfigItem('text', 'Text', 'parktime');
   color: ColorConfig = getColorConfig(ColorStrategies.GRADIENT_GRAY);
   svg: SvgConfig = { src: '', node: () => '' };
 

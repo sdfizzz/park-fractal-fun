@@ -45,8 +45,8 @@ type SvgConfig = {
 };
 
 type StoreType = {
-  screen: { width: number; height: number };
-  branch: { defaultLen: number; width: number };
+  readonly screen: { width: number; height: number };
+  readonly branch: { defaultLen: number; width: number };
   stroke: SliderConfigItemType;
   angle: SliderConfigItemType;
   branchCount: SliderConfigItemType;
