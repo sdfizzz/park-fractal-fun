@@ -1,8 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Article, Section, Title } from '../components/info/textStyles';
+import Definition from '../components/info/Definition';
+import Properties from '../components/info/Properties';
+import WhyFractal from '../components/info/WhyFractal';
+import Pyramids from '../components/info/Pyramids';
 
-const Container = styled.div``;
-
-const Info = () => <Container>Info page</Container>;
+const Info = () => (
+  <Section>
+    <Article>
+      <Title>Канторово множество</Title>
+      <Definition />
+      <Properties />
+      <WhyFractal />
+      <Pyramids />
+    </Article>
+  </Section>
+);
 
 export default Info;

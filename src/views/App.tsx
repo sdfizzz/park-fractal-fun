@@ -7,10 +7,12 @@ import { StoreProvider } from '../store/StoreContext';
 import Info from './Info';
 import GlobalStyle from '../components/GlobalStyle';
 import PixiApp from '../components/PixiApp';
+import GlobalFonts from '../fonts';
 
 function App() {
   return (
     <>
+      <GlobalFonts />
       <GlobalStyle />
       <Router>
         <StoreProvider canvasSize={{ w: 800, h: 800 }}>

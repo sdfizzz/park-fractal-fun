@@ -18,7 +18,9 @@ const ParkLogo = styled.img`
   height: 40px;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
+  color: currentColor;
+
   :visited {
     color: currentColor;
   }
@@ -30,11 +32,18 @@ const Footer = () => (
       <ParkLogo src="img/park-logo.svg" alt="Intuition Park" />
     </Link>
     <br />
-    <StyledLink to="https://ulyanov.design/">Вова</StyledLink>,{' '}
-    <StyledLink to="https://www.linkedin.com/in/alexey-chupin-developer/">Алексей</StyledLink> и{' '}
-    <StyledLink to="https://nellykam.space/">Нелли</StyledLink>
-    <br />
-    сделали этот проект для весеннего парка в 2021 году
+    <StyledLink target="_blank" href="https://ulyanov.design/">
+      Вова
+    </StyledLink>
+    ,{' '}
+    <StyledLink target="_blank" href="https://www.linkedin.com/in/alexey-chupin-developer/">
+      Алексей
+    </StyledLink>{' '}
+    и{' '}
+    <StyledLink target="_blank" href="https://nellykam.space/">
+      Нелли
+    </StyledLink>
+    <p>сделали этот проект для весеннего парка в 2021 году</p>
   </Container>
 );
 
