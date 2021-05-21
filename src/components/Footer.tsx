@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const Container = styled.footer`
   position: fixed;
-  left: -20px;
+  right: 20px;
   bottom: 0;
   width: 100%;
   color: white;
@@ -30,8 +30,9 @@ const Footer = () => (
       <ParkLogo src="img/park-logo.svg" alt="Intuition Park" />
     </Link>
     <br />
-    <StyledLink to="/">Вова</StyledLink>, <StyledLink to="/">Алексей</StyledLink> и{' '}
-    <StyledLink to="/">Нелли</StyledLink>
+    <StyledLink to="https://ulyanov.design/">Вова</StyledLink>,{' '}
+    <StyledLink to="https://www.linkedin.com/in/alexey-chupin-developer/">Алексей</StyledLink> и{' '}
+    <StyledLink to="https://nellykam.space/">Нелли</StyledLink>
     <br />
     сделали этот проект для весеннего парка в 2021 году
   </Container>

@@ -11,7 +11,13 @@ const Container = styled.div`
   z-index: 1;
 `;
 
-const SideMenu = ({ onSaveClick, className }: { onSaveClick: () => void; className?: string }) => {
+const SideMenu = ({
+  onSaveClick,
+  className,
+}: {
+  onSaveClick: (type: string) => void;
+  className?: string;
+}) => {
   const store = React.useContext(StoreContext);
 
   return (
@@ -35,8 +41,11 @@ const SideMenu = ({ onSaveClick, className }: { onSaveClick: () => void; classNa
       </MenuBox>
       <SymbolsButtonBox />
       <MenuButtonBox>
-        <MenuButton type="button" onClick={onSaveClick}>
-          Save
+        <MenuButton type="button" onClick={() => onSaveClick('png')}>
+          .png
+        </MenuButton>
+        <MenuButton type="button" onClick={() => onSaveClick('webp')}>
+          .webp
         </MenuButton>
       </MenuButtonBox>
     </Container>

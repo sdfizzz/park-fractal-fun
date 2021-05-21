@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Container = styled.nav<{ area: string }>`
-  grid-area: ${({ area }) => area};
-  min-height: 100px;
+const Container = styled.nav`
+  min-height: 50px;
+
+  position: fixed;
+  right: 20px;
+  top: 0;
+  width: 100%;
 
   display: flex;
   align-items: center;
@@ -19,8 +23,8 @@ const StyledLink = styled(Link)`
   margin: 14px 16px;
 `;
 
-const Header = ({ area }: { area: string }) => (
-  <Container area={area}>
+const Header = () => (
+  <Container>
     <StyledLink to="/">Канторово множество</StyledLink>
     <StyledLink to="/info">Теория</StyledLink>
   </Container>

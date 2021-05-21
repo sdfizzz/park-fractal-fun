@@ -1,4 +1,4 @@
-import React, { ForwardedRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stage } from '@inlet/react-pixi';
 import { observer } from 'mobx-react-lite';
 
@@ -86,8 +86,8 @@ const getFractalSet = async (
   return result;
 };
 
-const FractalCanvas = observer<{}, Stage>(
-  (_, ref) => {
+const FractalCanvas = observer<{ className?: string }, Stage>(
+  (props, ref) => {
     const { screen, branch, config, text, svg } = useStore();
     const [fractalSet, setFractalSet] = useState<Array<BranchProps>>([]);
 
@@ -137,6 +137,7 @@ const FractalCanvas = observer<{}, Stage>(
         height={screen.height}
         options={{ antialias: true, autoDensity: true, backgroundAlpha: 0 }}
         ref={ref}
+        className={props.className}
       >
         {!!usedText &&
           fractalSet.map((item) => (

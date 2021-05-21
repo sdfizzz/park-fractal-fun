@@ -20,6 +20,11 @@ const GlobalStyle = createGlobalStyle`
     background-size: cover;
     color: #ffffff;
   }
+  
+  button {
+    font-family: 'Golos Text', sans-serif;
+    color: #ffffff;
+  }
 `;
 
 export default GlobalStyle;
