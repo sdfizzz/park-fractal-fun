@@ -9,10 +9,10 @@ const Info = () => (
   <Section>
     <Article>
       <Title>Канторово множество</Title>
+      <Pyramids />
       <Definition />
       <Properties />
       <WhyFractal />
-      <Pyramids />
     </Article>
   </Section>
 );

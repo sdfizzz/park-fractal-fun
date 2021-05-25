@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import * as PIXI from 'pixi.js';
 import { Stage } from '@inlet/react-pixi';
 import SideMenu from './menu/SideMenu';
 import FractalCanvas from './fractal/FractalCanvas';
@@ -24,6 +25,8 @@ const Container = styled.div`
   }
 `;
 
+PIXI.settings.RESOLUTION = 8;
+
 const PixiApp = () => {
   const stageRef = React.useRef<Stage>(null);
 
@@ -35,7 +38,7 @@ const PixiApp = () => {
     // @ts-ignore
     const { renderer, stage } = stageRef.current.app;
 
-    let image = renderer.plugins.extract.image(stage, `image/${type}`, 1);
+    let image = renderer.plugins.extract.image(stage, `image/${type}`, 0);
     let imageSrc = image.src;
 
     const arr = imageSrc.split(',');

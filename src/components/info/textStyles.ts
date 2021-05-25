@@ -98,6 +98,10 @@ const TextBlock = styled.div`
 
 const Image = styled.img``;
 
+const WhiteLink = styled.a`
+  color: #fff;
+`;
+
 export {
   Section,
   Article,
@@ -109,4 +113,5 @@ export {
   Mention,
   Explanation,
   OrderedList,
+  WhiteLink,
 };
