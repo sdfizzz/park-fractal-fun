@@ -81,17 +81,18 @@ const TextBlock = styled.div`
   ${OrderedList} {
     list-style: none;
 
-    & li {
-      //margin: 0 0 0.5rem 0;
+    > li {
       position: relative;
-      font-family: 'Golos Bold', serif;
+
+      h3 {
+        font-size: 1.8em;
+        font-family: 'Golos Regular', serif;
+        font-weight: 400;
+      }
 
       :not(:first-child) {
-        margin-top: 40px;
+        margin-top: 80px;
       }
-    }
-
-    & li::before {
     }
   }
 `;

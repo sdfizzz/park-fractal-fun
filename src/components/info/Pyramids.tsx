@@ -1,5 +1,5 @@
 import React from 'react';
-import { Explanation, Image, Paragraph, ParagraphTitle } from './textStyles';
+import { Explanation, Image, Paragraph, ParagraphTitle, WhiteLink } from './textStyles';
 
 const Pyramids = () => (
   <>
@@ -48,6 +48,14 @@ const Pyramids = () => (
       размерностей, потребуется время. Однако если их&nbsp;результаты подтвердятся, археологи
       приобретут замечательный и&nbsp;совершенно неожиданный инструмент для поиска мест для будущих
       раскопок. И&nbsp;это будет здорово.
+    </Paragraph>
+    <Paragraph>
+      <WhiteLink href="https://www.sciencedirect.com/science/article/abs/pii/S1040618212001267">
+        Источник 1
+      </WhiteLink>
+    </Paragraph>
+    <Paragraph>
+      <WhiteLink href="https://lenta.ru/articles/2012/07/31/fractal/">Источник 2</WhiteLink>
     </Paragraph>
   </>
 );

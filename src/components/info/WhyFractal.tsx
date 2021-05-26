@@ -7,9 +7,9 @@ const WhyFractal = () => (
     <ParagraphTitle>Почему это фрактал?</ParagraphTitle>
     <Paragraph>Существует размерность Хаусдорфа-Безинковича</Paragraph>
     <Svg11 />
-    <Paragraph>Классическая размерность&nbsp;КМ</Paragraph>
+    <Paragraph>Классическая размерность&nbsp;Канторово множества</Paragraph>
     <Svg12 />
-    <Paragraph>При этом, если выполняется,</Paragraph>
+    <Paragraph>При этом, если выполняется</Paragraph>
     <Svg13 />
     <Paragraph>
       то&nbsp;мы&nbsp;имеем дело с&nbsp;фракталом. Подробнее можно прочитать{' '}
