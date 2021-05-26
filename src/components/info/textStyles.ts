@@ -85,7 +85,7 @@ const TextBlock = styled.div`
       position: relative;
 
       h3 {
-        font-size: 1.8em;
+        font-size: 1.6em;
         font-family: 'Golos Regular', serif;
         font-weight: 400;
       }
