@@ -1,23 +1,29 @@
 class Direction {
-  dx = 0;
-  dy = 0;
-  readonly #angle: number = 0;
+  dx;
+  dy;
+  readonly #angle;
 
   constructor(dx: number = 0, dy: number = 0) {
-    this.dx = dx;
-    this.dy = dy;
-
-    if (dx !== 0 || dy !== 0) {
+    let angle = 0;
+    if (dx === 0 && dy !== 0) {
+      angle = (Math.PI / 2) * Math.sign(dy);
+    } else if (dx !== 0 && dy === 0) {
+      angle = dx < 0 ? Math.PI : 0;
+    } else if (dx !== 0 || dy !== 0) {
       let tan = dy / dx;
       if (isFinite(tan)) {
-        this.#angle = Math.atan(tan);
+        angle = Math.atan(tan);
         if ((tan > 0 && dx < 0) || (tan < 0 && dy > 0)) {
-          this.#angle += Math.PI;
+          angle += Math.PI;
         }
       } else {
-        this.#angle = (Math.PI / 2) * Math.sign(dy);
+        angle = (Math.PI / 2) * Math.sign(dy);
       }
     }
+
+    this.dx = dx;
+    this.dy = dy;
+    this.#angle = angle;
   }
 
   get angle() {
