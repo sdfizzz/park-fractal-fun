@@ -14,6 +14,7 @@ const Input = styled.input`
   border: 2px solid var(--input-border);
   border-radius: 4px;
   transition: 180ms box-shadow ease-in-out;
+  color: white;
 
   &:focus {
     border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
@@ -21,6 +22,7 @@ const Input = styled.input`
       hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
     outline: 3px solid transparent;
     background: white;
+    color: black;
   }
 
   &:hover {
