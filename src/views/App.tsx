@@ -8,6 +8,7 @@ import Info from './Info';
 import GlobalStyle from '../components/GlobalStyle';
 import PixiApp from '../components/PixiApp';
 import GlobalFonts from '../fonts';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
           <Header />
           <Switch>
             <Route path="/" exact>
-              <PixiApp />
+              <ErrorBoundary>
+                <PixiApp />
+              </ErrorBoundary>
             </Route>
             <Route path="/info">
               <Info />
