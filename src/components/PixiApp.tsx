@@ -4,8 +4,11 @@ import * as PIXI from 'pixi.js';
 import { Stage } from '@inlet/react-pixi';
 import SideMenu from './menu/SideMenu';
 import FractalCanvas from './fractal/FractalCanvas';
+import ConfigPrinter from './test/ConfigPrinter';
 
 const StyledFractalCanvas = styled(FractalCanvas)``;
+
+const StyledConfigPrinter = styled(ConfigPrinter)``;
 
 const StyledSideMenu = styled(SideMenu)``;
 
@@ -22,6 +25,11 @@ const Container = styled.div`
   ${StyledFractalCanvas} {
     grid-column: 3 / 4;
     grid-row: 1 / 3;
+  }
+
+  ${StyledConfigPrinter} {
+    grid-column: 1 / 4;
+    grid-row: 3/4;
   }
 `;
 
@@ -66,6 +74,8 @@ const PixiApp = () => {
     <Container>
       <StyledSideMenu onSaveClick={onSaveClick} />
       <StyledFractalCanvas ref={stageRef} />
+      {window.location.hostname === 'localhost' ||
+        (window.location.hostname === '127.0.0.1' && <StyledConfigPrinter />)}
     </Container>
   );
 };

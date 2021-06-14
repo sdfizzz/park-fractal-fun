@@ -5,6 +5,7 @@ type ItemType = {
   type: string;
   title: string;
   current: string | number;
+  format?: (val: any) => string;
 };
 
 type ConfigItemType<T> = ItemType & {

@@ -10,10 +10,7 @@ import colorCalculator from './ColorCalculator';
 import FractalBranch from './FractalBranch';
 import FractalText from './FractalText';
 
-const getBranchesAsync = async (
-  head: BranchProps,
-  conf: ConfigProps
-): Promise<Array<BranchProps>> => {
+const getBranches = (head: BranchProps, conf: ConfigProps): Array<BranchProps> => {
   const { angle, branchCount, branchLenCoef } = conf;
   const { thickness, deep } = head;
 
@@ -22,13 +19,13 @@ const getBranchesAsync = async (
   const len = head.direction.length * branchLenCoef;
   const color = colorCalculator(branchesDeep, conf);
 
-  const promises = new Array<Promise<BranchProps>>();
+  const branchProps = new Array<BranchProps>();
 
   let stepAngle = angle / (branchCount - 1);
   let angleCounter = branchCount % 2 === 0 ? stepAngle / 2 : 0;
 
   for (let k = 0; k < Math.ceil(branchCount / 2); k += 1, angleCounter += stepAngle) {
-    promises.push(
+    branchProps.push(
       calculateBranch({
         start: head.end,
         angle: head.direction.angle + angleCounter,
@@ -40,7 +37,7 @@ const getBranchesAsync = async (
     );
 
     if (angleCounter !== 0) {
-      promises.push(
+      branchProps.push(
         calculateBranch({
           start: head.end,
           angle: head.direction.angle - angleCounter,
@@ -53,38 +50,39 @@ const getBranchesAsync = async (
     }
   }
 
-  return Promise.all(promises);
+  return branchProps;
 };
 
-const getFractalSet = async (
+async function getFractalSet(
   screen: { w: number; h: number },
   branch: { w: number; h: number },
   conf: ConfigProps
-): Promise<BranchProps[]> => {
+) {
   let x = screen.w / 2;
   let y = (screen.h * 3) / 4;
+  const { deep, stroke } = conf;
 
-  const firstBranch = await calculateBranch({
-    start: { x, y },
-    end: { x, y: y - branch.h },
-    deep: 0,
-    thickness: conf.stroke,
-    color: colorCalculator(0, conf),
-  });
-  const result = new Array<BranchProps>(firstBranch);
+  const result = new Array<BranchProps>(
+    calculateBranch({
+      start: { x, y },
+      end: { x, y: y - branch.h },
+      deep: 0,
+      thickness: stroke,
+      color: colorCalculator(0, conf),
+    })
+  );
+  let lastBranch: Array<BranchProps> = [...result];
 
-  let lastBranch = result;
-
-  for (let i = 1; i < conf.deep; i += 1) {
-    const promises: Promise<Array<BranchProps>>[] = lastBranch.map((v) =>
-      getBranchesAsync(v, conf)
-    );
-    // eslint-disable-next-line no-await-in-loop
-    lastBranch = await Promise.all(promises).then((arr) => arr.flat());
-    result.unshift(...lastBranch);
+  // TODO refact with async functions
+  for (let i = 1; i < deep; i += 1) {
+    const newBranch: BranchProps[] = [];
+    lastBranch.map((v) => getBranches(v, conf)).forEach((r) => newBranch.push(...r));
+    lastBranch = newBranch;
+    result.unshift(...newBranch);
   }
-  return result;
-};
+
+  return [...result];
+}
 
 const FractalCanvas = observer<{ className?: string }, Stage>(
   (props, ref) => {
@@ -97,33 +95,23 @@ const FractalCanvas = observer<{ className?: string }, Stage>(
     };
 
     useEffect(() => {
-      const ret: { promise?: Promise<Array<BranchProps>>; cancel?: () => void } = {};
-      const signal = new Promise((resolve, reject) => {
-        ret.cancel = () => {
-          reject(new Error('Calc branches cancelled'));
-        };
+      let isCanceled = false;
+
+      const genFunc = getFractalSet(
+        { w: screen.width, h: screen.height },
+        { w: branch.width, h: branch.defaultLen },
+        config
+      ).then((set) => {
+        if (!isCanceled) setFractalSet(set);
       });
 
-      ret.promise = new Promise<Array<BranchProps>>((resolve, reject) => {
-        signal.catch((err) => {
-          reject(err);
-        });
-
-        getFractalSet(
-          { w: screen.width, h: screen.height },
-          { w: branch.width, h: branch.defaultLen },
-          config
-        ).then((r) => resolve(r));
-      });
-
-      ret.promise
-        .then((set) => {
-          setFractalSet(set);
-        })
-        .catch(() => {});
+      (async () => {
+        if (isCanceled) return;
+        await genFunc;
+      })();
 
       return () => {
-        if (ret.cancel) ret.cancel();
+        isCanceled = true;
       };
     }, [config, screen, branch]);
 
