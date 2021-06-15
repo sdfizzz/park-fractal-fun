@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as PIXI from 'pixi.js';
 import { Stage } from '@inlet/react-pixi';
+import * as PIXI from 'pixi.js';
+import bowser from 'bowser';
 import SideMenu from './menu/SideMenu';
 import FractalCanvas from './fractal/FractalCanvas';
 import ConfigPrinter from './test/ConfigPrinter';
@@ -33,10 +34,13 @@ const Container = styled.div`
   }
 `;
 
-PIXI.settings.RESOLUTION = 8;
-
 const PixiApp = () => {
   const stageRef = React.useRef<Stage>(null);
+
+  const parsed = bowser.parse(window.navigator.userAgent);
+  if (parsed.platform.type === 'desktop') {
+    PIXI.settings.RESOLUTION = 8;
+  }
 
   function onSaveClick(type: string) {
     if (!stageRef.current) {
