@@ -50,6 +50,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.14.5",
     "@types/pixi.js": "^5.0.0",
     "@types/styled-components": "^5.1.9",
     "babel-jest": "^26.6.3",
