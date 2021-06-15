@@ -1,9 +1,9 @@
 class Direction {
   dx;
   dy;
-  readonly #angle;
+  alpha;
 
-  constructor(dx: number = 0, dy: number = 0) {
+  constructor(dx = 0, dy = 0) {
     let angle = 0;
     if (dx === 0 && dy !== 0) {
       angle = (Math.PI / 2) * Math.sign(dy);
@@ -23,11 +23,11 @@ class Direction {
 
     this.dx = dx;
     this.dy = dy;
-    this.#angle = angle;
+    this.alpha = angle;
   }
 
   get angle() {
-    return this.#angle;
+    return this.alpha;
   }
 
   get length() {
